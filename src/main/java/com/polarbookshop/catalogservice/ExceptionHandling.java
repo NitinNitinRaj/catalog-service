@@ -1,4 +1,4 @@
-package com.polarbookshop.catalogservice.domain.exception;
+package com.polarbookshop.catalogservice;
 
 import java.util.List;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.polarbookshop.catalogservice.domain.exception.BookAlreadyExitsException;
+import com.polarbookshop.catalogservice.domain.exception.BookNotFoundException;
+import com.polarbookshop.catalogservice.domain.exception.ErrorResponse;
 
 @RestControllerAdvice
 public class ExceptionHandling extends ResponseEntityExceptionHandler {
