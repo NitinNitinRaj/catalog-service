@@ -34,9 +34,23 @@ public class BookValidationTest {
     Book book = new Book("123456789", "Book Title", "Author Name", 100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(violations).hasSize(1);
-    assertEquals( 
+    assertEquals(
       violations.iterator().next().getMessage(),
       "ISBN format must be valid"
     );
+  }
+
+  @Test
+  void blankConstraintVoilated() {
+    Book book = new Book("", "", "", 100.0);
+    Set<ConstraintViolation<Book>> violations = validator.validate(book);
+    assertThat(violations).hasSize(4);
+  }
+
+  @Test
+  void postiveConstraintVoilated() {
+    Book book = new Book("1234567890", "Book Title", "Author Name", -100.0);
+    Set<ConstraintViolation<Book>> violations = validator.validate(book);
+    assertThat(violations).hasSize(1);
   }
 }
