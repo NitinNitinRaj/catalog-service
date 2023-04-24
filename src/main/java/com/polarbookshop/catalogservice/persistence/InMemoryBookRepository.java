@@ -5,7 +5,6 @@ import com.polarbookshop.catalogservice.domain.repositories.BookRespository;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -13,10 +12,7 @@ public class InMemoryBookRepository implements BookRespository {
 
   private static final Map<String, Book> books = new ConcurrentHashMap<>();
 
-  public InMemoryBookRepository() {
-    books.put("1234567890", new Book("1234567890", "Book 1", "Author 1",12.88));
-    books.put("9876543210", new Book("9876543210", "Book 2", "Author 2",15.99));
-  }
+  public InMemoryBookRepository() {}
 
   @Override
   public Iterable<Book> findAll() {
@@ -43,4 +39,5 @@ public class InMemoryBookRepository implements BookRespository {
   public void deleteByIsbn(String isbn) {
     books.remove(isbn);
   }
+  
 }

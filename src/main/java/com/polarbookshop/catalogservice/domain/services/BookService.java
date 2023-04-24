@@ -8,4 +8,5 @@ public interface BookService {
   Book addBookToCatalog(Book book);
   void removeBookFromCatalog(String isbn);
   Book editBookDetails(String isbn, Book book);
+  boolean bookPresent(String isbn);
 }

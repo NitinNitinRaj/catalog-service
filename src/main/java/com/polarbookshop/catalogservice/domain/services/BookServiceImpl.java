@@ -55,4 +55,9 @@ public class BookServiceImpl implements BookService {
       })
       .orElseGet(() -> addBookToCatalog(book));
   }
+
+  @Override
+  public boolean bookPresent(String isbn) {
+    return bookRespository.existsByIsbn(isbn);
+  }
 }
