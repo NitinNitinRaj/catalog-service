@@ -28,7 +28,7 @@ public class BookControllerMvcTests {
       .willThrow(new BookNotFoundException(isbn));
 
     mockMvc
-      .perform(get("/api/v1/books/s" + isbn))
+      .perform(get("/api/v1/books/" + isbn))
       .andExpect(status().isNotFound());
   }
 }
