@@ -41,16 +41,59 @@ public class BookValidationTests {
   }
 
   @Test
-  void blankConstraintVoilated() {
-    Book book = new Book("", "", "", 100.0);
+  void isbnNotDefinedValidationFailed() {
+    Book book = new Book("", "Book Title", "Author Name", 100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
-    assertThat(violations).hasSize(4);
+    assertThat(
+      violations.stream().map(ConstraintViolation::getMessage).toList()
+    )
+      .contains("ISBN must be defined")
+      .contains("ISBN format must be valid");
   }
 
   @Test
-  void postiveConstraintVoilated() {
+  void titleNotDefinedValidationFailed() {
+    Book book = new Book("1234567890", "", "Author Name", 100.0);
+    Set<ConstraintViolation<Book>> violations = validator.validate(book);
+    assertThat(violations.iterator().next().getMessage())
+      .isEqualTo("Title must be defined");
+  }
+
+  @Test
+  void authorNotDefinedValidationFailed() {
+    Book book = new Book("1234567890", "Book Title", "", 100.0);
+    Set<ConstraintViolation<Book>> violations = validator.validate(book);
+    assertThat(violations.iterator().next().getMessage())
+      .isEqualTo("Author must be defined");
+  }
+
+  @Test
+  void priceNullValidationFailed() {
+    Book book = new Book("1234567890", "Book Title", "Author Name", null);
+    Set<ConstraintViolation<Book>> violations = validator.validate(book);
+    assertThat(
+      violations.stream().map(ConstraintViolation::getMessage).toList()
+    )
+      .contains("Price must be defined");
+  }
+
+  @Test
+  void negativePriceValidationFailed() {
     Book book = new Book("1234567890", "Book Title", "Author Name", -100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
-    assertThat(violations).hasSize(1);
+    assertThat(
+      violations.stream().map(ConstraintViolation::getMessage).toList()
+    )
+      .contains("Price must be greater than zero");
+  }
+
+  @Test
+  void zeroPriceValidationFailed() {
+    Book book = new Book("1234567890", "Book Title", "Author Name", 0.0);
+    Set<ConstraintViolation<Book>> violations = validator.validate(book);
+    assertThat(
+      violations.stream().map(ConstraintViolation::getMessage).toList()
+    )
+      .contains("Price must be greater than zero");
   }
 }
