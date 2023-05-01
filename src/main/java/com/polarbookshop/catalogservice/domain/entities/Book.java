@@ -20,7 +20,7 @@ public record Book(
   @NotNull(message = "Price must be defined")
   @Positive(message = "Price must be greater than zero")
   Double price,
-  @Version int Version
+  @Version int version
 ) {
   public static Book of(
     String isbn,
