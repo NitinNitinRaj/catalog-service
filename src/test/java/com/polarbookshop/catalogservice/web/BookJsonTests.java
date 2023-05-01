@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.polarbookshop.catalogservice.domain.entities.Book;
 import java.io.IOException;
+import java.time.Instant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
@@ -17,12 +18,15 @@ public class BookJsonTests {
 
   @Test
   void testSerialize() throws Exception {
+    var now = Instant.now();
     Book book = new Book(
       21L,
       "1234567890",
       "Book Title",
       "Author Name",
       100.0,
+      now,
+      now,
       2
     );
     var jsonContent = json.write(book);
@@ -44,10 +48,17 @@ public class BookJsonTests {
     assertThat(jsonContent)
       .extractingJsonPathNumberValue("@.version")
       .isEqualTo(book.version());
+    assertThat(jsonContent)
+      .extractingJsonPathStringValue("@.createdDate")
+      .isEqualTo(book.createdDate().toString());
+    assertThat(jsonContent)
+      .extractingJsonPathStringValue("@.lastModifiedDate")
+      .isEqualTo(book.lastModifiedDate().toString());
   }
 
   @Test
   void testDeserialize() throws IOException {
+    var instant = Instant.parse("2021-09-07T22:50:37.135029Z");
     var content =
       """
             {   "id":21,
@@ -55,13 +66,24 @@ public class BookJsonTests {
                 "title":"Book Title",
                 "author":"Author Name",
                 "price":100.0,
+                "createdDate": "2021-09-07T22:50:37.135029Z",
+                "lastModifiedDate": "2021-09-07T22:50:37.135029Z",
                 "version":1
             }
             """;
     assertThat(json.parse(content))
       .usingRecursiveComparison()
       .isEqualTo(
-        new Book(21L, "1234567890", "Book Title", "Author Name", 100.0, 1)
+        new Book(
+          21L,
+          "1234567890",
+          "Book Title",
+          "Author Name",
+          100.0,
+          instant,
+          instant,
+          1
+        )
       );
   }
 }
