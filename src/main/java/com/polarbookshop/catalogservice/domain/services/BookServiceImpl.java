@@ -45,7 +45,7 @@ public class BookServiceImpl implements BookService {
     return bookRespository
       .findByIsbn(isbn)
       .map(existingBook -> {
-        var updatedBook = new Book(
+        var updatedBook = Book.of(
           existingBook.isbn(),
           book.title(),
           book.author(),

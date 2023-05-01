@@ -24,14 +24,14 @@ public class BookValidationTests {
 
   @Test
   void noConstraintsAreVoilated() {
-    Book book = new Book("1234567890", "Book Title", "Author Name", 100.0);
+    Book book = Book.of("1234567890", "Book Title", "Author Name", 100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(violations).isEmpty();
   }
 
   @Test
   void isbnConstraintVoilated() {
-    Book book = new Book("123456789", "Book Title", "Author Name", 100.0);
+    Book book = Book.of("123456789", "Book Title", "Author Name", 100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(violations).hasSize(1);
     assertEquals(
@@ -42,7 +42,7 @@ public class BookValidationTests {
 
   @Test
   void isbnNotDefinedValidationFailed() {
-    Book book = new Book("", "Book Title", "Author Name", 100.0);
+    Book book = Book.of("", "Book Title", "Author Name", 100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(
       violations.stream().map(ConstraintViolation::getMessage).toList()
@@ -53,7 +53,7 @@ public class BookValidationTests {
 
   @Test
   void titleNotDefinedValidationFailed() {
-    Book book = new Book("1234567890", "", "Author Name", 100.0);
+    Book book = Book.of("1234567890", "", "Author Name", 100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(violations.iterator().next().getMessage())
       .isEqualTo("Title must be defined");
@@ -61,7 +61,7 @@ public class BookValidationTests {
 
   @Test
   void authorNotDefinedValidationFailed() {
-    Book book = new Book("1234567890", "Book Title", "", 100.0);
+    Book book = Book.of("1234567890", "Book Title", "", 100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(violations.iterator().next().getMessage())
       .isEqualTo("Author must be defined");
@@ -69,7 +69,7 @@ public class BookValidationTests {
 
   @Test
   void priceNullValidationFailed() {
-    Book book = new Book("1234567890", "Book Title", "Author Name", null);
+    Book book = Book.of("1234567890", "Book Title", "Author Name", null);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(
       violations.stream().map(ConstraintViolation::getMessage).toList()
@@ -79,7 +79,7 @@ public class BookValidationTests {
 
   @Test
   void negativePriceValidationFailed() {
-    Book book = new Book("1234567890", "Book Title", "Author Name", -100.0);
+    Book book = Book.of("1234567890", "Book Title", "Author Name", -100.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(
       violations.stream().map(ConstraintViolation::getMessage).toList()
@@ -89,7 +89,7 @@ public class BookValidationTests {
 
   @Test
   void zeroPriceValidationFailed() {
-    Book book = new Book("1234567890", "Book Title", "Author Name", 0.0);
+    Book book = Book.of("1234567890", "Book Title", "Author Name", 0.0);
     Set<ConstraintViolation<Book>> violations = validator.validate(book);
     assertThat(
       violations.stream().map(ConstraintViolation::getMessage).toList()

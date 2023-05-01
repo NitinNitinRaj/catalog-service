@@ -19,8 +19,8 @@ public class BookDataLoader {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadData(){
-        var book1 = new Book("1234567890","Book1","Author1",12.99);
-        var book2 = new Book("0987654321","Book2","Author2",13.99);
+        var book1 = Book.of("1234567890","Book1","Author1",12.99);
+        var book2 = Book.of("0987654321","Book2","Author2",13.99);
         bookRespository.save(book1);
         bookRespository.save(book2);
     }
