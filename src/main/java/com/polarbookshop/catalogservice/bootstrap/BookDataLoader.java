@@ -2,6 +2,9 @@ package com.polarbookshop.catalogservice.bootstrap;
 
 import com.polarbookshop.catalogservice.domain.entities.Book;
 import com.polarbookshop.catalogservice.domain.repositories.BookRespository;
+
+import java.util.List;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
@@ -19,10 +22,10 @@ public class BookDataLoader {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadData(){
+        bookRespository.deleteAll();
         var book1 = Book.of("1234567890","Book1","Author1",12.99);
         var book2 = Book.of("0987654321","Book2","Author2",13.99);
-        bookRespository.save(book1);
-        bookRespository.save(book2);
+        bookRespository.saveAll(List.of(book1,book2));
     }
 
 }
