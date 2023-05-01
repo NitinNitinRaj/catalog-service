@@ -108,32 +108,30 @@ class CatalogServiceApplicationTests {
 
   @Test
   void whenDeleteNoContent() {
+    String isbn = "1478523698";
     webTestClient
       .delete()
-      .uri("/api/v1/books/1478523698")
+      .uri("/api/v1/books/" + isbn)
       .exchange()
       .expectStatus()
       .isNoContent();
+
     webTestClient
       .get()
-      .uri("/api/v1/books")
+      .uri("/api/v1/books/" + isbn)
       .exchange()
       .expectStatus()
-      .isOk()
-      .expectBodyList(Book.class)
-      .value(bookList -> {
-        assertThat(bookList).hasSize(0);
+      .isNotFound()
+      .expectBody(String.class)
+      .value(errorMessage -> {
+        assertThat(errorMessage)
+          .contains("Book with id " + isbn + " not found");
       });
   }
 
   @Test
   void whenPutThenBookEdited() {
-    var expectedBook = Book.of(
-      "1478523698",
-      "Spring Boot",
-      "Nitin Raj",
-      130.0
-    );
+    var expectedBook = Book.of("1478523698", "Spring Boot", "Nitin Raj", 130.0);
     webTestClient
       .put()
       .uri("/api/v1/books/1478523698")

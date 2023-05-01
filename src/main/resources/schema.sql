@@ -7,7 +7,7 @@ CREATE TABLE
         isbn VARCHAR(255) UNIQUE NOT NULL,
         price FLOAT8 NOT NULL,
         title VARCHAR(255) NOT NULL,
-        createdDate TIMESTAMP NOT NULL,
-        lastModifiedDate TIMESTAMP NOT NULL,
+        created_date TIMESTAMP NOT NULL,
+        last_modified_date TIMESTAMP NOT NULL,
         version INTEGER NOT NULL
     );
