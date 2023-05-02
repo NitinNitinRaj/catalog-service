@@ -17,7 +17,7 @@ spring:
             uri: http://localhost:8888
             request-connect-timeout: 5000
             request-read-timeout: 5000
-            fail-fast: false # remember to change it to true
+            fail-fast: true # remember to change it to true
             retry:
                 max-attempts: 6
                 initial-interval: 1000
@@ -27,9 +27,9 @@ spring:
         username: user
         password: password
         url: jdbc:postgresql://localhost:5432/polardb_catalog
-    sql:
-        init:
-            mode: always
+    # sql:
+    #     init:
+    #         mode: always        --- remove so that flyway can be used.
 
 management:
     endpoints:
