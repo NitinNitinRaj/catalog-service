@@ -30,7 +30,7 @@ public class BookRepositoryJdbcTests {
   @Test
   public void testFindBookByIsbnWhenExisting() {
     var bookIsbn = "1234567890";
-    var book = Book.of(bookIsbn, "title", "Author", 12.99);
+    var book = Book.of(bookIsbn, "title", "Author", 12.99, "publisher");
     jdbcAggregateTemplate.insert(book);
     Optional<Book> dbBook = bookRespository.findByIsbn(bookIsbn);
     assertThat(dbBook).isPresent();
@@ -46,7 +46,7 @@ public class BookRepositoryJdbcTests {
   @Test
   public void testExistsByIsbnWhenExisting() {
     var bookIsbn = "1234567890";
-    var book = Book.of(bookIsbn, "title", "Author", 12.99);
+    var book = Book.of(bookIsbn, "title", "Author", 12.99, "publisher");
     jdbcAggregateTemplate.insert(book);
     boolean isExisiting = bookRespository.existsByIsbn(bookIsbn);
     assertThat(isExisiting).isTrue();
@@ -61,7 +61,7 @@ public class BookRepositoryJdbcTests {
   @Test
   public void deleteByIsbn() {
     var bookIsbn = "1234567890";
-    var book = Book.of(bookIsbn, "title", "Author", 12.99);
+    var book = Book.of(bookIsbn, "title", "Author", 12.99, "publisher");
     var dbBook = jdbcAggregateTemplate.insert(book);
     bookRespository.deleteByIsbn(bookIsbn);
     assertThat(jdbcAggregateTemplate.findById(dbBook.id(), Book.class))
@@ -71,9 +71,9 @@ public class BookRepositoryJdbcTests {
   @Test
   public void findAll() {
     var bookIsbn1 = "1234567890";
-    var book1 = Book.of(bookIsbn1, "title", "Author", 12.99);
+    var book1 = Book.of(bookIsbn1, "title", "Author", 12.99,"publisher");
     var bookIsbn2 = "1234567899";
-    var book2 = Book.of(bookIsbn2, "title2", "Author2", 13.99);
+    var book2 = Book.of(bookIsbn2, "title2", "Author2", 13.99,"publisher");
     jdbcAggregateTemplate.insert(book1);
     jdbcAggregateTemplate.insert(book2);
 

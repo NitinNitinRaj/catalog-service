@@ -20,7 +20,13 @@ class CatalogServiceApplicationTests {
 
   @BeforeEach
   void setUp() {
-    var expectedBook = Book.of("1478523698", "Spring Boot", "Nitin", 129.9);
+    var expectedBook = Book.of(
+      "1478523698",
+      "Spring Boot",
+      "Nitin",
+      129.9,
+      "publisher"
+    );
     webTestClient
       .post()
       .uri("/api/v1/books")
@@ -37,7 +43,8 @@ class CatalogServiceApplicationTests {
       "1592587412",
       "Spring Cloud Native",
       "Raj",
-      29.9
+      29.9,
+      "publisher"
     );
     webTestClient
       .post()
@@ -55,7 +62,13 @@ class CatalogServiceApplicationTests {
 
   @Test
   void whenPostSameBookThenNotCreated() {
-    var expectedBook = Book.of("1478523698", "Spring Boot", "Nitin", 129.9);
+    var expectedBook = Book.of(
+      "1478523698",
+      "Spring Boot",
+      "Nitin",
+      129.9,
+      "publisher"
+    );
 
     webTestClient
       .post()
@@ -133,7 +146,13 @@ class CatalogServiceApplicationTests {
 
   @Test
   void whenPutThenBookEdited() {
-    var expectedBook = Book.of("1478523698", "Spring Boot", "Nitin Raj", 130.0);
+    var expectedBook = Book.of(
+      "1478523698",
+      "Spring Boot",
+      "Nitin Raj",
+      130.0,
+      "publisher"
+    );
     webTestClient
       .put()
       .uri("/api/v1/books/1478523698")
@@ -152,7 +171,13 @@ class CatalogServiceApplicationTests {
 
   @Test
   void whenPutWithUnkownThenBookCreated() {
-    var expectedBook = Book.of("7894561230", "Jungle Book", "Mogli", 10.99);
+    var expectedBook = Book.of(
+      "7894561230",
+      "Jungle Book",
+      "Mogli",
+      10.99,
+      "publisher"
+    );
     webTestClient
       .put()
       .uri("/api/v1/books/7894561230")
